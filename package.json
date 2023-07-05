@@ -1,0 +1,24 @@
+{
+  "name": "chat-application",
+  "version": "1.0.0",
+  "description": "A  private chat application which is mainly run by admin.",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dibyenducse/private_chat_application.git"
+  },
+  "keywords": [
+    "chat",
+    "nodejs",
+    "expressjs"
+  ],
+  "author": "Dibyendu Mondal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dibyenducse/private_chat_application/issues"
+  },
+  "homepage": "https://github.com/dibyenducse/private_chat_application#readme"
+}
