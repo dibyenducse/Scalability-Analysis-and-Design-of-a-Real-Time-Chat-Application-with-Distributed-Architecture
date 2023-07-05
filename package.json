@@ -1,24 +1,38 @@
 {
-  "name": "chat-application",
-  "version": "1.0.0",
-  "description": "A  private chat application which is mainly run by admin.",
-  "main": "index.js",
-  "scripts": {
-    "test": "nodemon index"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dibyenducse/private_chat_application.git"
-  },
-  "keywords": [
-    "chat",
-    "nodejs",
-    "expressjs"
-  ],
-  "author": "Dibyendu Mondal",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/dibyenducse/private_chat_application/issues"
-  },
-  "homepage": "https://github.com/dibyenducse/private_chat_application#readme"
+    "name": "private-chat-application",
+    "version": "1.0.0",
+    "description": "A  private chat application which is mainly run by admin.",
+    "main": "app.js",
+    "scripts": {
+        "test": "nodemon index",
+        "start": "NODE_ENV= development nodemon app.js",
+        "prod": "NODE_ENV=production node app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/dibyenducse/private_chat_application.git"
+    },
+    "keywords": [
+        "chat",
+        "nodejs",
+        "expressjs"
+    ],
+    "author": "Dibyendu Mondal",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/dibyenducse/private_chat_application/issues"
+    },
+    "homepage": "https://github.com/dibyenducse/private_chat_application#readme",
+    "dependencies": {
+        "bcrypt": "^5.1.0",
+        "cookie-parser": "^1.4.6",
+        "dotenv": "^16.3.1",
+        "ejs": "^3.1.9",
+        "express": "^4.18.2",
+        "express-validator": "^7.0.1",
+        "http-errors": "^2.0.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^7.3.1",
+        "multer": "^1.4.5-lts.1"
+    }
 }
