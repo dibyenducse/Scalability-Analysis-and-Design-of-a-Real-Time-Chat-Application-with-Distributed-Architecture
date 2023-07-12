@@ -11,6 +11,6 @@ const router = express.Router();
 router.get('/', decorateHtmlResponse('Users'), getUsers);
 
 //add user
-router.post('/', avatarUpload, [check('name'), check('email')]);
+router.post('/', avatarUpload);
 
 module.exports = router;
