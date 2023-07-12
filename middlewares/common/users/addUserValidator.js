@@ -1,5 +1,8 @@
 //external Imports
-const { check } = require('express-validator');
+const { check, validationResult } = require('express-validator');
+const { unlink } = require('fs');
+const path = require('path');
+const createError = require('http-errors');
 
 //add user
 
@@ -42,10 +45,34 @@ const addUserValidators = [
     check('password')
         .isStrongPassword()
         .withMessage(
-            'Password must be at least 8 charecters long 7 should contain at least 1 lowercase ,1 upercase, 1 umber & 1 symbol'
+            'Password must be at least 8 charecters long & should contain at least 1 lowercase ,1 upercase, 1 umber & 1 symbol'
         ),
 ];
 
+const addUserValidationHandler = function (req, res, next) {
+    const errors = validationResult(req);
+    const mappedErrors = errors.mapped();
+    if (Object.keys(mappedErrors).length === 0) {
+        next();
+    } else {
+        //remove the uploaded file
+        if (req.files.length > 0) {
+            const { filename } = req.files[0];
+            unlink(
+                path.join(__dirname, `/../public/uploads/avatars/${filename}`),
+                (err) => {
+                    if (err) console.log(err);
+                }
+            );
+        }
+        //response the errors
+        res.status(500).json({
+            errors: mappedErrors,
+        });
+    }
+};
+
 module.exports = {
     addUserValidators,
+    addUserValidationHandler,
 };
