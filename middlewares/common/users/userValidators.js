@@ -3,7 +3,8 @@ const { check, validationResult } = require('express-validator');
 const { unlink } = require('fs');
 const path = require('path');
 const createError = require('http-errors');
-
+// internal imports
+const User = require('../../../models/People');
 //add user
 
 const addUserValidators = [
@@ -19,7 +20,7 @@ const addUserValidators = [
         .trim()
         .custom(async (value) => {
             try {
-                const user = await user.findOne({ email: value });
+                const user = await User.findOne({ email: value });
                 if (user) {
                     throw createError('Email already is use!');
                 }
@@ -34,7 +35,7 @@ const addUserValidators = [
         .withMessage('Mobile number must be valid Bangladeshi mobile number')
         .custom(async (value) => {
             try {
-                const user = await UserActivation.findOner({ mobile: value });
+                const user = await User.findOne({ mobile: value });
                 if (user) {
                     throw createError('Mobine number already is used');
                 }

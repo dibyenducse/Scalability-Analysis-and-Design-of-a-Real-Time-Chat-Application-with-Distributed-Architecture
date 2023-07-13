@@ -7,7 +7,7 @@ const avatarUpload = require('../middlewares/common/users/avatarUpload');
 const {
     addUserValidators,
     addUserValidationHandler,
-} = require('../middlewares/common/users/addUserValidator');
+} = require('../middlewares/common/users/userValidators');
 
 //create express router
 const router = express.Router();
