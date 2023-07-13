@@ -13,6 +13,7 @@
             >
                 <input type="text" placeholder="enter name" name="name" />
                 <p class="error name-error"></p>
+                //by default off in css
 
                 <input type="text" placeholder="enter email" name="email" />
                 <p class="error email-error"></p>
@@ -72,7 +73,7 @@
         }
 
         // prepare the form data
-        const formData = new FormData(form);
+        const formData = new FormData(form); //Html method
 
         // send the request to server
         let response = await fetch('/users', {
@@ -81,11 +82,11 @@
         });
 
         // get response
-        let result = await response.json();
+        let result = await response.json(); //made it json
 
         // handle error and response
         if (result.errors) {
-            // errors
+            // errors in DOM
             Object.keys(result.errors).forEach((fieldName) => {
                 // add error class to all inputs
                 form[fieldName].classList.add('error');
