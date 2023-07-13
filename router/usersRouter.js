@@ -9,6 +9,7 @@ const {
     addUserValidationHandler,
 } = require('../middlewares/common/users/addUserValidator');
 
+//create express router
 const router = express.Router();
 
 //Users page

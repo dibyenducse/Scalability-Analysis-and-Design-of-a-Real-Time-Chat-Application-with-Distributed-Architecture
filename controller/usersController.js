@@ -1,6 +1,21 @@
-//get users page
-function getUsers(req, res, next) {
-    res.render('users');
+// external imports
+const bcrypt = require('bcrypt');
+const { unlink } = require('fs');
+const path = require('path');
+
+// internal imports
+const User = require('../models/People');
+
+// get users page
+async function getUsers(req, res, next) {
+    try {
+        const users = await User.find();
+        res.render('users', {
+            users: users,
+        });
+    } catch (err) {
+        next(err);
+    }
 }
 
 //add users
@@ -20,6 +35,8 @@ async function addUser(req, res, next) {
             password: hashedpassword,
         });
     }
+
+    //save user or send error
     try {
         const result = await newUser.save();
         res.status(200).json({
