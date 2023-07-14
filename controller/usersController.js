@@ -51,6 +51,7 @@ async function addUser(req, res, next) {
             },
         });
     }
+    console.log(result);
 }
 
 module.exports = {

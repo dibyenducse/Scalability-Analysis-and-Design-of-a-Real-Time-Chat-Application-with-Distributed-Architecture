@@ -3,12 +3,12 @@ const multer = require('multer');
 const path = require('path');
 const createError = require('http-errors');
 
-function uploader(
+const uploader = (
     subfolder_path,
     allowed_file_types,
     max_file_size,
     error_msg
-) {
+) => {
     // File upload folder
     const UPLOADS_FOLDER = `${__dirname}/../public/uploads/${subfolder_path}/`;
 
@@ -47,6 +47,6 @@ function uploader(
         },
     });
     return upload;
-}
-
+};
+console.log(uploader);
 module.exports = uploader;
