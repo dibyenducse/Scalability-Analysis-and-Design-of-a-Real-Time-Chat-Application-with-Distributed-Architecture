@@ -5,7 +5,7 @@ const createError = require('http-errors');
 
 const uploader = (
     subfolder_path,
-    allowed_file_types,
+   ['allowed_file_type_1', 'allowed_file_type_2'],
     max_file_size,
     error_msg
 ) => {
@@ -39,7 +39,7 @@ const uploader = (
             fileSize: max_file_size,
         },
         fileFilter: (req, file, cb) => {
-            if (allowed_file_types.includes(file.mimetype)) {
+            if (allowed_file_type_1.includes(file.mimetype) ||allowed_file_type_2.includes(file.mimetype) ) {
                 cb(null, true);
             } else {
                 cb(createError(error_msg));
@@ -49,4 +49,5 @@ const uploader = (
     return upload;
 };
 console.log(uploader);
+
 module.exports = uploader;
