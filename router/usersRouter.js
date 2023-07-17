@@ -3,11 +3,11 @@ const express = require('express');
 //internal import
 const { getUsers, addUser } = require('../controller/usersController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
-const avatarUpload = require('../middlewares/common/users/avatarUpload');
+const avatarUpload = require('../middlewares/users/avatarUpload');
 const {
     addUserValidators,
     addUserValidationHandler,
-} = require('../middlewares/common/users/userValidators');
+} = require('../middlewares/users/userValidators');
 
 //create express router
 const router = express.Router();

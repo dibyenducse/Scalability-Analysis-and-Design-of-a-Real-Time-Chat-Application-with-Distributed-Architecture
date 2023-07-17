@@ -3,12 +3,12 @@ const multer = require('multer');
 const path = require('path');
 const createError = require('http-errors');
 
-const uploader = (
+function uploader(
     subfolder_path,
-   ['allowed_file_type_1', 'allowed_file_type_2'],
+    allowed_file_types,
     max_file_size,
     error_msg
-) => {
+) {
     // File upload folder
     const UPLOADS_FOLDER = `${__dirname}/../public/uploads/${subfolder_path}/`;
 
@@ -32,22 +32,22 @@ const uploader = (
         },
     });
 
-    //prepare the final multer upload object
+    // preapre the final multer upload object
     const upload = multer({
         storage: storage,
         limits: {
             fileSize: max_file_size,
         },
         fileFilter: (req, file, cb) => {
-            if (allowed_file_type_1.includes(file.mimetype) ||allowed_file_type_2.includes(file.mimetype) ) {
+            if (allowed_file_types.includes(file.mimetype)) {
                 cb(null, true);
             } else {
                 cb(createError(error_msg));
             }
         },
     });
+
     return upload;
-};
-console.log(uploader);
+}
 
 module.exports = uploader;

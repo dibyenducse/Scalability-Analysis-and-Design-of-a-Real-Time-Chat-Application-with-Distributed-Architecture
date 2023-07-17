@@ -4,7 +4,7 @@ const { unlink } = require('fs');
 const path = require('path');
 const createError = require('http-errors');
 // internal imports
-const User = require('../../../models/People');
+const User = require('../../models/People');
 
 //add user
 const addUserValidators = [
