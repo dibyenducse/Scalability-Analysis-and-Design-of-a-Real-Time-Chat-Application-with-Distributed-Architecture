@@ -24,6 +24,11 @@ mongoose
     })
     .then(() => console.log('Database connection successful!'))
     .catch((err) => console.log(err));
+//mongoose.connection object to register event listeners.
+
+mongoose.connection.on('connected', () => {
+    console.log('Connected to MongoDB');
+});
 
 //request parsers
 app.use(express.json());
