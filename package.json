@@ -5,7 +5,7 @@
     "main": "app.js",
     "scripts": {
         "test": "nodemon index",
-        "start": "NODE_ENV= development nodemon app.js",
+        "start": "NODE_ENV=development nodemon app.js",
         "prod": "NODE_ENV=production node app.js"
     },
     "repository": {
@@ -17,7 +17,7 @@
         "nodejs",
         "expressjs"
     ],
-    "author": "Dibyendu Mondal",
+    "author": "Dibyendu Mondal<dibyendu@bloombrain.net>",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/dibyenducse/private_chat_application/issues"
