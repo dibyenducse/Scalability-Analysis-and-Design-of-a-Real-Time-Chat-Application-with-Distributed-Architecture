@@ -18,40 +18,50 @@ async function getUsers(req, res, next) {
     }
 }
 
-//add users
+/// add users
 async function addUser(req, res, next) {
     let newuser;
-    const hashedpassword = await bcrypt.hash(req.body.password, 10);
 
-    if (req.files && req.files.length > 0) {
-        newUser = new User({
-            ...req.body,
-            avatar: req.files[0].filename,
-            password: hashedpassword,
-        });
-    } else {
-        newuser = new User({
-            ...req.body,
-            password: hashedpassword,
-        });
-    }
-
-    //save user or send error
     try {
+        // Generate a salt for hashing the password
+        const saltRounds = 10;
+        const myPlaintextPassword = req.body.password;
+        console.log(req.body);
+        const hashedPassword = await bcrypt.hash(
+            myPlaintextPassword,
+            saltRounds
+        );
+
+        if (req.files && req.files.length > 0) {
+            newUser = new User({
+                ...req.body,
+                avatar: req.files[0].filename,
+                password: hashedPassword,
+            });
+        } else {
+            newuser = new User({
+                ...req.body,
+                password: hashedPassword,
+            });
+        }
+
+        // Save user or send error
         const result = await newUser.save();
+        console.log(result);
+
         res.status(200).json({
             message: 'User was added successfully',
         });
     } catch (err) {
+        console.log(err);
         res.status(500).json({
             errors: {
                 common: {
-                    msg: 'Unknown error occured',
+                    msg: 'Unknown error occurred',
                 },
             },
         });
     }
-    console.log(result);
 }
 
 module.exports = {
