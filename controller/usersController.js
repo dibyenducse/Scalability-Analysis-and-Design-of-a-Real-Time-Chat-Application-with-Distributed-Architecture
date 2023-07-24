@@ -20,7 +20,7 @@ async function getUsers(req, res, next) {
 
 /// add users
 async function addUser(req, res, next) {
-    let newuser;
+    let newUser;
 
     try {
         // Generate a salt for hashing the password
@@ -39,7 +39,7 @@ async function addUser(req, res, next) {
                 password: hashedPassword,
             });
         } else {
-            newuser = new User({
+            newUser = new User({
                 ...req.body,
                 password: hashedPassword,
             });
@@ -47,7 +47,7 @@ async function addUser(req, res, next) {
 
         // Save user or send error
         const result = await newUser.save();
-        console.log(result);
+        //console.log(result);
 
         res.status(200).json({
             message: 'User was added successfully',

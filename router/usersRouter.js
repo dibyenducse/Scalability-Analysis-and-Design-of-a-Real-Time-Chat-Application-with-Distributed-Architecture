@@ -16,7 +16,13 @@ const router = express.Router();
 router.get('/', decorateHtmlResponse('Users'), getUsers);
 
 //add user
-router.post('/', addUser);
+router.post(
+    '/',
+    avatarUpload,
+    addUserValidators,
+    addUserValidationHandler,
+    addUser
+);
 
 module.exports = router;
 
