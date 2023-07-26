@@ -50,12 +50,13 @@
     function closeModal() {
         modal.style.display = 'none';
     }
+
     function openModal() {
         modal.style.display = 'block';
     }
 
     // form submit handler
-    form.onsubmit = async function (event) {
+    form.onsubmit = function (event) {
         event.preventDefault();
 
         // clear errors first
@@ -72,45 +73,53 @@
         }
 
         // prepare the form data
-        const formData = new FormData(form); //Html method
+        const formData = new FormData(form);
 
-        console.log(formData);
+        // send the request to server using XMLHttpRequest
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/users');
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Request was successful
+                    const result = JSON.parse(xhr.responseText);
 
-        // send the request to server
-        let response = await fetch('/users', {
-            method: 'POST',
-            body: formData,
-        });
+                    // handle error and response
+                    if (result.errors) {
+                        // errors in DOM
+                        Object.keys(result.errors).forEach((fieldName) => {
+                            // add error class to all inputs
+                            form[fieldName].classList.add('error');
 
-        // get response
-        let result = await response.json(); //made it json
+                            // set all error placeholders (p tag) textContent
+                            const errorPlaceholder = document.querySelector(
+                                `.${fieldName}-error`
+                            );
+                            errorPlaceholder.textContent =
+                                result.errors[fieldName].msg;
 
-        // handle error and response
-        if (result.errors) {
-            // errors in DOM
-            Object.keys(result.errors).forEach((fieldName) => {
-                // add error class to all inputs
-                form[fieldName].classList.add('error');
+                            // make all placeholders visible
+                            errorPlaceholder.style.display = 'block';
+                        });
+                    } else {
+                        // success
+                        successToast.showToast();
+                        closeModal();
+                        document.querySelector('p.error').style.display =
+                            'none';
 
-                // set all error placeholders (p tag) textContent
-                const errorPlaceholder = document.querySelector(
-                    `.${fieldName}-error`
-                );
-                errorPlaceholder.textContent = result.errors[fieldName].msg;
+                        // reload the page after 1 second
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1000);
+                    }
+                } else {
+                    // Request failed (handle error)
+                    console.error('Error:', xhr.status, xhr.statusText);
+                }
+            }
+        };
 
-                // make all placeholders visible
-                errorPlaceholder.style.display = 'block';
-            });
-        } else {
-            // success
-            successToast.showToast();
-            closeModal();
-            document.querySelector('p.error').style.display = 'none';
-
-            // reload the page after 1 second
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
-        }
+        xhr.send(formData);
     };
 </script>
