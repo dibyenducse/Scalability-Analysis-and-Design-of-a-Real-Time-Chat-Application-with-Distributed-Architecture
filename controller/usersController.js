@@ -21,27 +21,27 @@ async function getUsers(req, res, next) {
 /// add users
 async function addUser(req, res, next) {
     let newUser;
-    console.log(req.body);
+    console.log(req.body.password);
 
     try {
         // Generate a salt for hashing the password
-        const saltRounds = 10;
+        // const saltRounds = 10;
         const myPlaintextPassword = req.body.password;
-        const hashedPassword = await bcrypt.hash(
-            myPlaintextPassword,
-            saltRounds
-        );
+        // const hashedPassword = await bcrypt.hash(
+        //     myPlaintextPassword,
+        //     saltRounds
+        // );
 
         if (req.files && req.files.length > 0) {
             newUser = new User({
                 ...req.body,
                 avatar: req.files[0].filename,
-                password: hashedPassword,
+                password: myPlaintextPassword,
             });
         } else {
             newUser = new User({
                 ...req.body,
-                password: hashedPassword,
+                password: myPlaintextPassword,
             });
         }
 

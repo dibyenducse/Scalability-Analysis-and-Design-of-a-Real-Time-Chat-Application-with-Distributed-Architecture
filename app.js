@@ -32,7 +32,7 @@ mongoose.connection.on('connected', () => {
 
 //request parsers
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 //set view engine
 app.set('view engine', 'ejs');
