@@ -21,7 +21,6 @@ async function getUsers(req, res, next) {
 /// add users
 async function addUser(req, res, next) {
     let newUser;
-    console.log(req.body.password);
 
     try {
         // Generate a salt for hashing the password
@@ -44,10 +43,11 @@ async function addUser(req, res, next) {
                 password: myPlaintextPassword,
             });
         }
+        console.log(req.body);
 
         // Save user or send error
         const result = await newUser.save();
-        //console.log(result);
+        console.log(result);
 
         res.status(200).json({
             message: 'User was added successfully',
