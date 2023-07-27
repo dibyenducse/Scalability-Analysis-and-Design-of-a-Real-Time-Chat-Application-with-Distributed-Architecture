@@ -21,12 +21,12 @@ async function getUsers(req, res, next) {
 /// add users
 async function addUser(req, res, next) {
     let newUser;
+    console.log(req.body);
 
     try {
         // Generate a salt for hashing the password
         const saltRounds = 10;
         const myPlaintextPassword = req.body.password;
-        console.log(req.body);
         const hashedPassword = await bcrypt.hash(
             myPlaintextPassword,
             saltRounds
