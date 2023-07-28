@@ -1,4 +1,48 @@
+<!-- Your EJS template -->
+<div class="modal-wrapper" id="add-user-modal">
+    <div class="modal">
+        <a href="#" onclick="closeModal()" class="modal-close">+</a>
+        <div class="modal-title">
+            <h2>Create New User</h2>
+        </div>
+        <div class="modal-body">
+            <form
+                method="post"
+                action="/users"
+                enctype="multipart/form-data"
+                id="add-user-form"
+            >
+                <input type="text" placeholder="Enter name" name="name" />
+                <p class="error name-error"></p>
+
+                <input type="text" placeholder="Enter email" name="email" />
+                <p class="error email-error"></p>
+
+                <input type="text" placeholder="Enter mobile" name="mobile" />
+                <p class="error mobile-error"></p>
+
+                <input
+                    type="password"
+                    placeholder="Enter password"
+                    name="password"
+                />
+                <p class="error password-error"></p>
+
+                <input type="file" name="avatar" />
+                <p class="error avatar-error"></p>
+
+                <p class="error common-error"></p>
+
+                <input type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Your other EJS content -->
+
 <script>
+    // Your EJS script
     const modal = document.querySelector('#add-user-modal');
     const form = document.querySelector('#add-user-form');
 
@@ -11,6 +55,7 @@
     function closeModal() {
         modal.style.display = 'none';
     }
+
     function openModal() {
         modal.style.display = 'block';
     }
@@ -33,43 +78,64 @@
         }
 
         // prepare the form data
-        const formData = new FormData(form); //Html method
+        const formData = new FormData(form); // Html method
 
-        // send the request to server
-        let response = await fetch('/users', {
-            method: 'POST',
-            body: formData,
-        });
+        // Assuming you have already created the FormData object named "formData" from the HTML form
+        const name = formData.get('name');
+        const email = formData.get('email');
+        const mobile = formData.get('mobile');
+        const password = formData.get('password');
+        const avatarFile = formData.get('avatar');
 
-        // get response
-        let result = await response.json(); //made it json
+        // If "avatarFile" is a file, you cannot directly include it in the JSON body
+        // Instead, you can create a new FormData and append the file to it
+        const dataWithAvatar = new FormData();
+        dataWithAvatar.append('name', name);
+        dataWithAvatar.append('email', email);
+        dataWithAvatar.append('mobile', mobile);
+        dataWithAvatar.append('password', password);
+        dataWithAvatar.append('avatar', avatarFile, avatarFile.name);
 
-        // handle error and response
-        if (result.errors) {
-            // errors in DOM
-            Object.keys(result.errors).forEach((fieldName) => {
-                // add error class to all inputs
-                form[fieldName].classList.add('error');
-
-                // set all error placeholders (p tag) textContent
-                const errorPlaceholder = document.querySelector(
-                    `.${fieldName}-error`
-                );
-                errorPlaceholder.textContent = result.errors[fieldName].msg;
-
-                // make all placeholders visible
-                errorPlaceholder.style.display = 'block';
+        try {
+            // send the request to server
+            const response = await fetch('/users', {
+                method: 'POST',
+                body: data, // Use "data" instead of "dataWithAvatar" if you don't need to send the avatar file
             });
-        } else {
-            // success
-            successToast.showToast();
-            closeModal();
-            document.querySelector('p.error').style.display = 'none';
 
-            // reload the page after 1 second
-            setTimeout(() => {
-                location.reload();
-            }, 1000);
+            // get response
+            const result = await response.json(); //made it json
+
+            // handle error and response
+            if (result.errors) {
+                // errors in DOM
+                Object.keys(result.errors).forEach((fieldName) => {
+                    // add error class to all inputs
+                    form[fieldName].classList.add('error');
+
+                    // set all error placeholders (p tag) textContent
+                    const errorPlaceholder = document.querySelector(
+                        `.${fieldName}-error`
+                    );
+                    errorPlaceholder.textContent = result.errors[fieldName].msg;
+
+                    // make all placeholders visible
+                    errorPlaceholder.style.display = 'block';
+                });
+            } else {
+                // success
+                successToast.showToast();
+                closeModal();
+                document.querySelector('p.error').style.display = 'none';
+
+                // reload the page after 1 second
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            }
+        } catch (error) {
+            // Handle any errors that occurred during the request
+            console.error('Error:', error);
         }
     };
 </script>
