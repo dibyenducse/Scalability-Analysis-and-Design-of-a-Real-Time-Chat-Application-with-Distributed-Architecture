@@ -1,7 +1,11 @@
 //external import
 const express = require('express');
 //internal import
-const { getUsers, addUser } = require('../controller/usersController');
+const {
+    getUsers,
+    addUser,
+    removeUser,
+} = require('../controller/usersController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 const avatarUpload = require('../middlewares/users/avatarUpload');
 const {
@@ -17,6 +21,9 @@ router.get('/', decorateHtmlResponse('Users'), getUsers);
 
 //add user
 router.post('/', addUser);
+
+//remove user
+router.delete('/:id', removeUser);
 
 module.exports = router;
 
