@@ -20,6 +20,7 @@ async function getUsers(req, res, next) {
 
 /// add users
 async function addUser(req, res, next) {
+    console.log(req.body);
     let newUser;
 
     try {
