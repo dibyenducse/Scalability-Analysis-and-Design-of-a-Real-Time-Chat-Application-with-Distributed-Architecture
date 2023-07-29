@@ -82,35 +82,35 @@
             }),
         });
 
-        // get response
-        // let result = await response.json();
+        //get response
+        let result = await response.json();
 
-        // handle error and response
-        // if (result.errors) {
-        //     // errors in DOM
-        //     Object.keys(result.errors).forEach((fieldName) => {
-        //         // add error class to all inputs
-        //         form[fieldName].classList.add('error');
+        //handle error and response
+        if (result.errors) {
+            // errors in DOM
+            Object.keys(result.errors).forEach((fieldName) => {
+                // add error class to all inputs
+                form[fieldName].classList.add('error');
 
-        //         // set all error placeholders (p tag) textContent
-        //         const errorPlaceholder = document.querySelector(
-        //             `.${fieldName}-error`
-        //         );
-        //         errorPlaceholder.textContent = result.errors[fieldName].msg;
+                // set all error placeholders (p tag) textContent
+                const errorPlaceholder = document.querySelector(
+                    `.${fieldName}-error`
+                );
+                errorPlaceholder.textContent = result.errors[fieldName].msg;
 
-        //         // make all placeholders visible
-        //         errorPlaceholder.style.display = 'block';
-        //     });
-        // } else {
-        //     // success
-        //     successToast.showToast();
-        //     closeModal();
-        //     document.querySelector('p.error').style.display = 'none';
+                // make all placeholders visible
+                errorPlaceholder.style.display = 'block';
+            });
+        } else {
+            // success
+            successToast.showToast();
+            closeModal();
+            document.querySelector('p.error').style.display = 'none';
 
-        //     // reload the page after 1 second
-        //     setTimeout(() => {
-        //         location.reload();
-        //     }, 1000);
-        // }
+            // reload the page after 1 second
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        }
     };
 </script>
