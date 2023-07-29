@@ -46,13 +46,13 @@ const addUserValidators = [
     check('password')
         .isStrongPassword()
         .withMessage(
-            'Password must be at least 8 charecters long & should contain at least 1 lowercase ,1 upercase, 1 umber & 1 symbol'
+            'Password must be at least 8 charecters long & should contain at least 1 lowercase ,1 upercase, 1 number & 1 symbol'
         ),
 ];
 
 const addUserValidationHandler = function (req, res, next) {
     const errors = validationResult(req);
-    const mappedErrors = errors.mapped();
+    const mappedErrors = errors.mapped(); //for getting 'error' as object
     if (Object.keys(mappedErrors).length === 0) {
         next();
     } else {

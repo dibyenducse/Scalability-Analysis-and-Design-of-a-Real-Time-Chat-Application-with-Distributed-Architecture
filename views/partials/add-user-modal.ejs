@@ -67,6 +67,7 @@
 
         // prepare the form data
         const formData = new FormData(form); //Html method
+        // const fileField = document.querySelector('input[type="file"]');
 
         // send the request to server
         let response = await fetch('/users', {
@@ -79,12 +80,13 @@
                 email: formData.get('email'),
                 mobile: formData.get('mobile'),
                 password: formData.get('password'),
+                // avatar: formData.append('avatar', fileField.files[0]),
             }),
         });
 
         //get response
         let result = await response.json();
-
+        console.log(result);
         //handle error and response
         if (result.errors) {
             // errors in DOM
