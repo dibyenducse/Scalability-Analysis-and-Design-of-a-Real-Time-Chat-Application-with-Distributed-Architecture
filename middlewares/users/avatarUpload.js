@@ -22,6 +22,8 @@ function avatarUpload(req, res, next) {
             next();
         }
     });
+
+    console.log(req.body);
 }
 
 module.exports = avatarUpload;
