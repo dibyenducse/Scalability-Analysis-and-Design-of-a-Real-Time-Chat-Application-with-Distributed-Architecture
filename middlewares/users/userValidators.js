@@ -6,7 +6,7 @@ const createError = require('http-errors');
 // internal imports
 const User = require('../../models/People');
 
-//add user
+//add user validation
 const addUserValidators = [
     check('name')
         .isLength({ min: 1 })
