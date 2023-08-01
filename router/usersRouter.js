@@ -1,5 +1,6 @@
 //external import
 const express = require('express');
+const multer = require('multer');
 //internal import
 const {
     getUsers,
@@ -18,11 +19,16 @@ const router = express.Router();
 
 //Users page
 router.get('/', decorateHtmlResponse('Users'), getUsers);
-
+const upload = multer();
 //add user
 router.post(
     '/',
-    avatarUpload,
+    upload.none(),
+    function (req, res, next) {
+        console.log(req.body);
+        res.status(200);
+        next();
+    },
     addUserValidators,
     addUserValidationHandler,
     addUser

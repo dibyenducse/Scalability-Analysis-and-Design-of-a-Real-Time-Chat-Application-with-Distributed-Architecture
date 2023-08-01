@@ -6,7 +6,7 @@
         </div>
         <div class="modal-body">
             <form
-                method="post"
+                method="POST"
                 action="/users"
                 id="add-user-form"
                 enctype="multipart/form-data"
@@ -83,6 +83,7 @@
 
         //get response
         let result = await response.json();
+        //show result on console
         console.log(result);
         //handle error and response
         if (result.errors) {
