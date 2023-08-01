@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-
+const cors = require('cors');
 //Internal imports
 const loginRouter = require('./router/loginRouter');
 const usersRouter = require('./router/usersRouter');
@@ -32,8 +32,9 @@ mongoose.connection.on('connected', () => {
 
 //request parsers
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
+app.use(express.urlencoded({ extended: false }));
+// Enable CORS for all routes
+app.use(cors());
 //set view engine
 app.set('view engine', 'ejs');
 
