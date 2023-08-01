@@ -1,13 +1,9 @@
-const upload = require('multer');
-
-const { uploader } = require('../../utilities/singleUploader');
 const multer = require('multer');
-
+const upload = multer();
 function fieldUpload(req, res, next) {
-    const upload = multer();
-    upload.none(),
-        function (req, res, next) {
-            console.log(req.body);
-        };
+    upload.none()(req, res, (err) => {
+        console.log(req.body);
+        next();
+    });
 }
 module.exports = fieldUpload;
