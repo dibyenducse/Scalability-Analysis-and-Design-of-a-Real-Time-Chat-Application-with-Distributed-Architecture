@@ -9,7 +9,7 @@ function avatarUpload(req, res, next) {
     );
 
     // Call the middleware function
-    upload.single()(req, res, (err) => {
+    upload.any()(req, res, (err) => {
         if (err instanceof multer.MulterError) {
             // Multer error occurred
             res.status(500).json({

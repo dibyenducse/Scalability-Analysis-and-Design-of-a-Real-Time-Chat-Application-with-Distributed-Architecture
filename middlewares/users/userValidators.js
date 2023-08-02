@@ -11,8 +11,8 @@ const addUserValidators = [
     check('name')
         .isLength({ min: 1 })
         .withMessage('Name is required')
-        .isAlpha('en-US', { ignore: '-' })
-        .withMessage('Name must not contain anything other than alphabet')
+        .isAlpha({ locale: 'en-US', ignore: '-' }) // Enclose ignore property in an object
+        .withMessage('Name must not contain anything other than alphabets')
         .trim(),
     check('email')
         .isEmail()
@@ -37,7 +37,7 @@ const addUserValidators = [
             try {
                 const user = await User.findOne({ mobile: value });
                 if (user) {
-                    throw createError('Mobine number already is used');
+                    throw createError('Mobile number already is used');
                 }
             } catch (err) {
                 throw createError(err.message);
