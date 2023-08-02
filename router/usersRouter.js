@@ -7,7 +7,7 @@ const {
     removeUser,
 } = require('../controller/usersController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
-const avatarUpload = require('../middlewares/users/avatarUpload');
+//const avatarUpload = require('../middlewares/users/avatarUpload');
 const fieldUpload = require('../middlewares/users/fieldsUpload');
 const {
     addUserValidators,
@@ -20,13 +20,7 @@ const router = express.Router();
 //Users page
 router.get('/', decorateHtmlResponse('Users'), getUsers);
 //add user
-router.post(
-    '/',
-    fieldUpload,
-    addUserValidators,
-    addUserValidationHandler,
-    addUser
-);
+router.post('/', fieldUpload, addUser);
 
 //remove user
 router.delete('/:id', removeUser);
