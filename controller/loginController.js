@@ -33,7 +33,7 @@ async function login(req, res, next) {
                 };
                 //generate token
                 const token = jwt.sign(userObject, process.env.JWT_SECRET, {
-                    expiresIn: process.env.JWT_SECRET,
+                    expiresIn: process.env.expiresIn,
                 });
 
                 //set cookie
