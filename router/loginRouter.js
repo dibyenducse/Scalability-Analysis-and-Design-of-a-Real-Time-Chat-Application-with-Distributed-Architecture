@@ -1,7 +1,7 @@
 //external import
 const express = require('express');
 //internal import
-const { getLogin, login } = require('../controller/loginController');
+const { getLogin, login, logout } = require('../controller/loginController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 const {
     doLoginValidationHandler,
@@ -23,5 +23,8 @@ router.post(
     doLoginValidationHandler,
     login
 );
+
+//process login
+router.delete('/', logout);
 
 module.exports = router;
