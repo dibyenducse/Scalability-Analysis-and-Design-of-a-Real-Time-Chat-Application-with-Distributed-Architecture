@@ -1,7 +1,7 @@
 //external import
 const express = require('express');
 //internal import
-const checkLogin = require('../middlewares/common/checkLogin');
+const { checkLogin } = require('../middlewares/common/checkLogin');
 const {
     getUsers,
     addUser,
@@ -21,7 +21,7 @@ const router = express.Router();
 //Users page
 router.get('/', decorateHtmlResponse('Users'), checkLogin, getUsers);
 //add user
-router.post('/', fieldUpload, addUser);
+router.post('/', checkLogin, fieldUpload, addUser);
 
 //remove user
 router.delete('/:id', removeUser);
