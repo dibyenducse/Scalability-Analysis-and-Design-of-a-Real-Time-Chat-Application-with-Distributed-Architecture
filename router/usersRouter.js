@@ -1,6 +1,7 @@
 //external import
 const express = require('express');
 //internal import
+const checkLogin = require('../middlewares/common/checkLogin');
 const {
     getUsers,
     addUser,
@@ -18,7 +19,7 @@ const {
 const router = express.Router();
 
 //Users page
-router.get('/', decorateHtmlResponse('Users'), getUsers);
+router.get('/', decorateHtmlResponse('Users'), checkLogin, getUsers);
 //add user
 router.post('/', fieldUpload, addUser);
 
