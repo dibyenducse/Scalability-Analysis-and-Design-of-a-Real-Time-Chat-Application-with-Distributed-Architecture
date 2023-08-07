@@ -8,7 +8,19 @@ const { checkExact } = require('express-validator');
 
 const router = express.Router();
 
-//login page
+//Inbox page
 router.get('/', decorateHtmlResponse('Inbox'), checkLogin, getInbox);
+
+//search user for coversation
+router.post('/search', checkLogin, searchUser);
+
+//add conversation
+router.post('/conversation', checkLogin, addConversation);
+
+//get messages of a conversation
+router.post('/message/:conversation_id', checkLogin, getMessage);
+
+//send message
+router.post('/message', checkLogin, attachmentUpload, sendMessage);
 
 module.exports = router;
