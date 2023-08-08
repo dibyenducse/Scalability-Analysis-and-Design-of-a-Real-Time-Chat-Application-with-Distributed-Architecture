@@ -1,7 +1,13 @@
 //external import
 const express = require('express');
 //internal import
-const { getInbox } = require('../controller/inboxController');
+const {
+    getInbox,
+    searchUser,
+    addConversation,
+    getMessage,
+    sendMessage,
+} = require('../controller/inboxController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 const { checkLogin } = require('../middlewares/common/checkLogin');
 const { checkExact } = require('express-validator');

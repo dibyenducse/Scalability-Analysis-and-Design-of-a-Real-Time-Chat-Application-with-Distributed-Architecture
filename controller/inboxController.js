@@ -60,4 +60,5 @@ async function searchUser(req, res, next) {
 
 module.exports = {
     getInbox,
+    searchUser,
 };
