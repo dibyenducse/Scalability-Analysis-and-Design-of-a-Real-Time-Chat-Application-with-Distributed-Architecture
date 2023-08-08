@@ -1,3 +1,5 @@
+const uploader = require('../../utilities/multipleUploader');
+
 function attachmentUpload(req, res, next) {
     const upload = uploader(
         'attachments',

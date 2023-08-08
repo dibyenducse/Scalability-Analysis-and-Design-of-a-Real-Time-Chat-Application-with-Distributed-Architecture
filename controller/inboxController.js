@@ -58,6 +58,36 @@ async function searchUser(req, res, next) {
     }
 }
 
+//add conversation
+async function addConversation(req, res, next) {
+    try {
+        const newConversation = new Conversation({
+            creator: {
+                id: req.userId,
+                name: req.user.username,
+                avatar: req.user.avatar || null,
+            },
+            participant: {
+                name: req.body.paricipant,
+                id: req.body.id,
+                avatar: req.body.avatar || null,
+            },
+        });
+        const result = await newConversation.save();
+        res.status(200).json({
+            message: 'Concversation was added successfully',
+        });
+    } catch (err) {
+        res.status(500).json({
+            errors: {
+                common: {
+                    msg: err.message,
+                },
+            },
+        });
+    }
+}
+
 //get messages of a conversation
 async function getMessages(req, res, next) {
     try {
@@ -158,6 +188,7 @@ async function sendMessage(req, res, next) {
 
 module.exports = {
     getInbox,
+    addConversation,
     searchUser,
     getMessages,
     sendMessage,
