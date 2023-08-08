@@ -58,7 +58,107 @@ async function searchUser(req, res, next) {
     }
 }
 
+//get messages of a conversation
+async function getMessages(req, res, next) {
+    try {
+        const messages = await Message.find({
+            conversation_id: req.params.conversation_id,
+        }).sort('-createdAt');
+
+        const { paricipant } = await Conversation.findById(
+            req.params.conversation_id
+        );
+
+        res.status(200).json({
+            data: {
+                messages: messages,
+                paricipant,
+            },
+            user: req.user.userid,
+            conversation_id: req.params.conversation_id,
+        });
+    } catch (err) {
+        res.status(500).json({
+            errors: {
+                common: {
+                    msg: 'Unknown Error Occured',
+                },
+            },
+        });
+    }
+}
+
+//send new message
+async function sendMessage(req, res, next) {
+    if (req.body.message || (req.files && req.files.length > 0)) {
+        try {
+            //save message text/attachment in database
+            let attachments = null;
+
+            if (req.files && req.files.length > 0) {
+                attachments = [];
+
+                req.files.array.forEach((file) => {
+                    attachments.push(file.filename);
+                });
+            }
+            const newMessage = new Message({
+                text: req.body.message,
+                attachment: attachments,
+                sender: {
+                    id: req.user.userid,
+                    name: req.user.username,
+                    avatar: req.user.avatar || null,
+                },
+                receiver: {
+                    id: req.body.receiverId,
+                    name: req.body.receiverName,
+                    avatar: req.body.avatar || null,
+                },
+                conversation_id: req.body.conversation_id,
+            });
+            const result = await newMessage.save();
+
+            //emit socket event
+            global.io.emit('new_message', {
+                message: {
+                    conversation_id: req.body.conversation_id,
+                    sender: {
+                        id: req.user.userid,
+                        name: req.user.username,
+                        avatar: req.user.avatar || null,
+                    },
+                    message: req.body.message,
+                    attachment: attachments,
+                    data_time: result.date_time,
+                },
+            });
+
+            res.status(200).json({
+                message: 'successful',
+                data: result,
+            });
+        } catch (err) {
+            res.status(500).json({
+                errors: {
+                    common: {
+                        msg: err.message,
+                    },
+                },
+            });
+        }
+    } else {
+        res.status(500).json({
+            errors: {
+                common: 'Message text or attachment is required',
+            },
+        });
+    }
+}
+
 module.exports = {
     getInbox,
     searchUser,
+    getMessages,
+    sendMessage,
 };
