@@ -15,18 +15,18 @@ const { attachmentUpload } = require('../middlewares/inbox/attachmentUpload');
 const router = express.Router();
 
 // //Inbox page
-// router.get('/', decorateHtmlResponse('Inbox'), checkLogin, getInbox);
+router.get('/', decorateHtmlResponse('Inbox'), checkLogin, getInbox);
 
 // //search user for coversation
-// router.post('/search', checkLogin, searchUser);
+router.post('/search', checkLogin, searchUser);
 
 // //add conversation
-// router.post('/conversation', checkLogin, addConversation);
+router.post('/conversation', checkLogin, addConversation);
 
 // //get messages of a conversation
-// router.post('/message/:conversation_id', checkLogin, getMessages);
+router.post('/message/:conversation_id', checkLogin, getMessages);
 
 // //send message
-// router.post('/message', checkLogin, attachmentUpload, sendMessage);
+router.post('/message', checkLogin, sendMessage);
 
 module.exports = router;
