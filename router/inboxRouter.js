@@ -11,7 +11,7 @@ const {
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 const { checkLogin } = require('../middlewares/common/checkLogin');
 const { attachmentUpload } = require('../middlewares/inbox/attachmentUpload');
-
+const uploader = require('../utilities/multipleUploader');
 const router = express.Router();
 
 // //Inbox page
