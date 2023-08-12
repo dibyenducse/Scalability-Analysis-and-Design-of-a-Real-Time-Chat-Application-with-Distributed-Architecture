@@ -1,78 +1,45 @@
-// const uploader = require('../../utilities/multipleUploader');
-
-function attachmentUpload(req, res, next) {
-    const upload = uploader(
-        'attachments',
-        ['image/jpeg', 'image/jpg', 'image/png'],
-        1000000,
-        2,
-        'Only .jpg, jpeg or .png format allowed!'
-    );
-
-    // call the middleware function
-}
-
-// external imports
 const multer = require('multer');
 const path = require('path');
 const createError = require('http-errors');
 
-function uploader(
-    subfolder_path,
-    allowed_file_types,
-    max_file_size,
-    max_number_of_files,
-    error_msg
-) {
-    // File upload folder
-    const UPLOADS_FOLDER = `${__dirname}/../public/uploads/${subfolder_path}/`;
+const allowed_file_types = ['image/jpeg', 'image/jpg', 'image/png'];
+const max_file_size = 1000000;
+const max_number_of_files = 2;
+const error_msg = 'Only .jpg, jpeg, or .png format allowed!';
 
-    // define the storage
-    const storage = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, UPLOADS_FOLDER);
-        },
-        filename: (req, file, cb) => {
-            const fileExt = path.extname(file.originalname);
-            const fileName =
-                file.originalname
-                    .replace(fileExt, '')
-                    .toLowerCase()
-                    .split(' ')
-                    .join('-') +
-                '-' +
-                Date.now();
+const UPLOADS_FOLDER = path.join(__dirname, 'public', 'uploads', 'attachments');
 
-            cb(null, fileName + fileExt);
-        },
-    });
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, UPLOADS_FOLDER);
+    },
+    filename: (req, file, cb) => {
+        const fileExt = path.extname(file.originalname);
+        const fileName =
+            file.originalname
+                .replace(fileExt, '')
+                .toLowerCase()
+                .split(' ')
+                .join('-') +
+            '-' +
+            Date.now();
 
-    // preapre the final multer upload object
-    const upload = multer({
-        storage: storage,
-        limits: {
-            fileSize: max_file_size,
-        },
-        fileFilter: (req, file, cb) => {
-            if (req.files.length > max_number_of_files) {
-                cb(
-                    createError(
-                        `Maximum ${max_number_of_files} files are allowed to upload!`
-                    )
-                );
-            } else {
-                if (allowed_file_types.includes(file.mimetype)) {
-                    cb(null, true);
-                } else {
-                    cb(createError(error_msg));
-                }
-            }
-        },
-    });
+        cb(null, fileName + fileExt);
+    },
+});
 
-    return upload;
-}
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: max_file_size,
+    },
+    fileFilter: (req, file, cb) => {
+        if (allowed_file_types.includes(file.mimetype)) {
+            cb(null, true);
+        } else {
+            cb(createError(error_msg));
+        }
+    },
+});
 
-module.exports = uploader;
-
-module.exports = attachmentUpload;
+module.exports = upload;

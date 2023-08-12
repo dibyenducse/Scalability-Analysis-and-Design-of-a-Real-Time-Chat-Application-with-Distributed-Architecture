@@ -10,8 +10,7 @@ const {
 } = require('../controller/inboxController');
 const decorateHtmlResponse = require('../middlewares/common/decorateHtmlResponse');
 const { checkLogin } = require('../middlewares/common/checkLogin');
-const { attachmentUpload } = require('../middlewares/inbox/attachmentUpload');
-const uploader = require('../utilities/multipleUploader');
+const attachmentUpload = require('../middlewares/inbox/attachmentUpload');
 const router = express.Router();
 
 // //Inbox page
@@ -21,7 +20,17 @@ router.get('/', decorateHtmlResponse('Inbox'), checkLogin, getInbox);
 router.post('/search', checkLogin, searchUser);
 
 // //add conversation
-router.post('/conversation', checkLogin, addConversation);
+router.post(
+    '/conversation',
+    checkLogin,
+    attachmentUpload.any(),
+    (req, res) => {
+        // Handle the uploaded files and continue with your logic
+
+        res.json({ message: 'Files uploaded and processed successfully.' });
+    },
+    addConversation
+);
 
 // //get messages of a conversation
 router.post('/message/:conversation_id', checkLogin, getMessages);
