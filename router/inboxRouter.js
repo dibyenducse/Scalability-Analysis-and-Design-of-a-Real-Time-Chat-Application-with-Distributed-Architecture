@@ -24,11 +24,6 @@ router.post(
     '/conversation',
     checkLogin,
     attachmentUpload.any(),
-    (req, res) => {
-        // Handle the uploaded files and continue with your logic
-
-        res.json({ message: 'Files uploaded and processed successfully.' });
-    },
     addConversation
 );
 
