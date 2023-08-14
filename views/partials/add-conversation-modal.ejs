@@ -86,7 +86,7 @@
         } else {
             if (result.length > 0) {
                 let generatedHrtml = '<ul>';
-                result.forEaach((user) => {
+                result.forEach((user) => {
                     const avatar = user.avatar
                         ? './uploads/avatars/' + user.avatar
                         : './images/nophoto.png';
@@ -102,7 +102,7 @@
                 });
                 generatedHrtml += '</ul>';
                 users_placeholder.innerHTML = generatedHrtml;
-                users_placeholder.stye.display = 'block';
+                users_placeholder.style.display = 'block';
             }
         }
     }
