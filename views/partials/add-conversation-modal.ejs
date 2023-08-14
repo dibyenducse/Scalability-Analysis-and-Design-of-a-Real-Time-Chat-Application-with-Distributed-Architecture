@@ -25,7 +25,7 @@
     const modal = document.querySelector('#add-conversation-modal');
     //typig detector
     let typingTimer;
-    const doneTypinginterval = 500;
+    let doneTypinginterval = 500;
     const input = document.querySelector('input#user');
     const conversation_list = document.querySelector('#conversation-list');
     let users_placeholder = document.querySelector('.search_users');
@@ -49,12 +49,12 @@
     }
     //on keyup listen, start the countdown
     input.addEventListener('keyup', function () {
-        clearTimeOut(typingTimer);
+        //clearTimeOut(typingTimer);
         //reset
         users_placeholder.style.display = 'none';
 
         if (input.value) {
-            typingTimer = setTimeout(searchUsers, doneTypingInterval); //user is "finished typing,"send search request
+            typingTimer = setTimeout(searchUsers, 500); //user is "finished typing,"send search request
         }
     });
     //on keydown, clear the countdown
@@ -76,6 +76,7 @@
 
         //get response
         let result = await response.json();
+        console.log(result);
 
         //handle error and response'
         if (result.errors) {
