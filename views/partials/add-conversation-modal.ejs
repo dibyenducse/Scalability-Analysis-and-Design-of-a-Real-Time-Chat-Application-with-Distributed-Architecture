@@ -85,13 +85,13 @@
             errorPlaceholder.style.display = 'block';
         } else {
             if (result.length > 0) {
-                let generatedHrtml = '<ul>';
+                let generatedHtml = '<ul>';
                 result.forEach((user) => {
                     const avatar = user.avatar
                         ? './uploads/avatars/' + user.avatar
                         : './images/nophoto.png';
 
-                    generatedHrtml += `<li onclick= "createConversation('${user._id}','${user.name}','${user.avatar}')">
+                    generatedHtml += `<li onclick= "createConversation('${user._id}','${user.name}','${user.avatar}')">
                         <div class = "user">
                             <div class="avatar">
                                 <img src="${avatar}" />
@@ -100,8 +100,8 @@
                                 </div>
                                 </li>`;
                 });
-                generatedHrtml += '</ul>';
-                users_placeholder.innerHTML = generatedHrtml;
+                generatedHtml += '</ul>';
+                users_placeholder.innerHTML = generatedHtml;
                 users_placeholder.style.display = 'block';
             }
         }
@@ -120,7 +120,8 @@
                     'Content-type': 'application/json; charset=UTF-8',
                 },
             });
-            const result = response.json();
+            const result = await response.json();
+            console.log(result);
 
             if (!result.errors) {
                 //reset
