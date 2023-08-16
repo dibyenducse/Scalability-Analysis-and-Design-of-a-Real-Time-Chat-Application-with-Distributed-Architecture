@@ -20,15 +20,17 @@ router.get('/', decorateHtmlResponse('Inbox'), checkLogin, getInbox);
 router.post('/search', checkLogin, searchUser);
 
 // //add conversation
-router.post(
-    '/conversation',
-    checkLogin,
-    attachmentUpload.any(),
-    addConversation
-);
+// router.post(
+//     '/conversation',
+//     checkLogin,
+//     attachmentUpload.any(),
+//     addConversation
+// );
 
+//add coversation
+router.post('/conversation', checkLogin, addConversation);
 // //get messages of a conversation
-router.post('/message/:conversation_id', checkLogin, getMessages);
+router.post('/messages/:conversation_id', checkLogin, getMessages);
 
 // //send message
 router.post('/message', checkLogin, sendMessage);
