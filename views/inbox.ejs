@@ -57,6 +57,7 @@
       </form>
 
     </div>
+    <!--add-conversation-modal--> 
     <%- include('./partials/add-conversation-modal.ejs'); %>
 
     <!-- import socket io client from cdn -->
@@ -126,10 +127,10 @@
           text: "Error loading messages!",
           duration: 1000,
         });
-
+        console.log(conversation_id)
         let response = await fetch(`/inbox/messages/${conversation_id}`);
         const result= await response.json();
-
+        console.log(result)
         if(!result.errors && result.data) {
             form.style.visibility = 'visible';
             
