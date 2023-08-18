@@ -96,7 +96,16 @@
 
           attachments += '</div>';
 
-          let messageHTML;
+
+          //final message html
+
+          let messageHTML = `<div class = "message-row ${messageClass}"><div class = "message-content">
+            ${showAvatar}
+            <div class = "message-text">${message.text}</div>
+            ${attachments}
+            <div class = "message-time">${moment(message.date_time).fromNow()}</div>
+            </div></div>
+          `
 
           // do not show avatar for loggedin user
           if(data.message.sender.id == loggedinUserId) {
@@ -116,7 +125,7 @@
 
           // append the inoming message to message area as last item
           document.querySelector('#chat-message-list > .message-row:first-child').insertAdjacentHTML('beforeBegin', messageHTML);
-        }
+        } 
       });
 
       // get messages of a conversation
@@ -124,13 +133,20 @@
 
         // messages failure toast
         const messagesFailureToast = Toastify({
-          text: "Error loading messages!",
+          text: "Error while loading messages!",
           duration: 1000,
         });
         console.log(conversation_id)
+
         let response = await fetch(`/inbox/messages/${conversation_id}`);
         const result= await response.json();
+        
         console.log(result)
+
+
+        console.log(result.data)
+
+
         if(!result.errors && result.data) {
             form.style.visibility = 'visible';
             
