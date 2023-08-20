@@ -99,13 +99,7 @@
 
           //final message html
 
-          let messageHTML = `<div class = "message-row ${messageClass}"><div class = "message-content">
-            ${showAvatar}
-            <div class = "message-text">${message.text}</div>
-            ${attachments}
-            <div class = "message-time">${moment(message.date_time).fromNow()}</div>
-            </div></div>
-          `
+          let messageHTML
 
           // do not show avatar for loggedin user
           if(data.message.sender.id == loggedinUserId) {
