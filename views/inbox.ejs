@@ -50,7 +50,7 @@
       </div>
 
       <!-- send message form -->
-      <form id="chat-form" method="post" enctype="multipart/form-data">
+      <form id="chat-form" method="POST" enctype="multipart/form-data">
         <label for="attachment"><img src="./images/attachment.png" alt="Add Attachment" /></label>
         <input type="file" multiple name="attachment" class="hide" id="attachment" />
         <input type="text" name="message" placeholder="Type a message" autocomplete="off" />
@@ -207,6 +207,9 @@
         formData.append('receiverName', participant.name);
         formData.append('avatar', participant.avatar || '');
         formData.append('conversationId', current_conversation_id);
+
+
+        console.log(formData)
 
         // send the request to server
         let response = await fetch("/inbox/message", {
