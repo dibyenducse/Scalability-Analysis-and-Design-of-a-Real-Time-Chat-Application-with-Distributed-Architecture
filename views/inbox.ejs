@@ -133,7 +133,7 @@
         console.log(conversation_id)
 
         let response = await fetch(`/inbox/messages/${conversation_id}`);
-        const result= await response.json();
+        let result= await response.json();
         
         console.log(result)
 
@@ -192,49 +192,39 @@
         }
     }
 
-      // message sending
-  form.onsubmit = async function (event) {
-  event.preventDefault();
+       // message sending
+      form.onsubmit = async function (event) {
+        event.preventDefault();
 
-  const sendMessageFailureToast = Toastify({
-    text: "Error sending message",
-    duration: 1000,
-  });
+        const sendMessageFailureToast = Toastify({
+          text: "Error sending message",
+          duration: 1000,
+        });
 
-  try {
-    // Prepare the form data
-    const formData = new FormData(form);
-    formData.append("receiverId", participant.id);
-    formData.append("receiverName", participant.name);
-    formData.append("conversationId", current_conversation_id);
+        // prepare the form data
+        const formData = new FormData(form);
+        formData.append('receiverId', participant.id);
+        formData.append('receiverName', participant.name);
+        formData.append('avatar', participant.avatar || '');
+        formData.append('conversationId', current_conversation_id);
 
-    console.log(formData);
+        // send the request to server
+        let response = await fetch("/inbox/message", {
+          method: "POST",
+          body: formData,
+        });
 
-    // Send the request to the server
-    let response = await fetch("/inbox/message", {
-      method: "POST",
-      body: formData,
-    });
+        // get response
+        let result = await response.json();
 
-    // Check if the response status is OK
-    if (response.ok) {
-      // Get response data
-      let result = await response.json();
+        console.log(result)
 
-      if (!result.errors) {
-        form.reset(); // Reset the form
-      } else {
-        sendMessageFailureToast.showToast();
+        if (!result.errors) {
+          form.reset(); // reset the form
+        } else {
+          sendMessageFailureToast.showToast();
+        }
       }
-    } else {
-      sendMessageFailureToast.showToast();
-      console.error("Error: Response status was not OK.");
-    }
-  } catch (error) {
-    sendMessageFailureToast.showToast();
-    console.error("Error during fetch:", error);
-  }
-};
 
       
     </script>

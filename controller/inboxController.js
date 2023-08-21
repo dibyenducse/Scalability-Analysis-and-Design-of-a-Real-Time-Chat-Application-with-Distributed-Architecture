@@ -128,7 +128,6 @@ async function getMessages(req, res, next) {
 
 // send new message
 async function sendMessage(req, res, next) {
-    console.log(req.body.message);
     if (req.body.message > 0) {
         try {
             // save message text/attachment in database
@@ -158,7 +157,7 @@ async function sendMessage(req, res, next) {
                 conversation_id: req.body.conversationId,
             });
 
-            const result = await newMessage.save();
+            let result = await newMessage.save();
 
             // emit socket event
             global.io.emit('new_message', {
