@@ -30,7 +30,7 @@ router.post('/search', checkLogin, searchUser);
 //add coversation
 router.post('/conversation', checkLogin, addConversation);
 // //get messages of a conversation
-router.post('/messages/:conversation_id', checkLogin, getMessages);
+router.get('/messages/:conversation_id', checkLogin, getMessages);
 
 // //send message
 router.post('/message', checkLogin, sendMessage);
