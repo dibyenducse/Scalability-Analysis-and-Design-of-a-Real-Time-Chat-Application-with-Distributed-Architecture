@@ -128,7 +128,7 @@ async function getMessages(req, res, next) {
 
 // send new message
 async function sendMessage(req, res, next) {
-    console.log(req.body);
+    console.log(req.body.message);
     if (req.body.message > 0) {
         try {
             // save message text/attachment in database
