@@ -126,9 +126,9 @@ async function getMessages(req, res, next) {
     }
 }
 
-// send new message
+/// send new message
 async function sendMessage(req, res, next) {
-    if (req.body.message > 0) {
+    if (req.body.message || (req.files && req.files.length > 0)) {
         try {
             // save message text/attachment in database
             let attachments = null;
