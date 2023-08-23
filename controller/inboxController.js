@@ -82,6 +82,7 @@ async function addConversation(req, res, next) {
         });
 
         const result = await newConversation.save();
+        console.log(result);
         res.status(200).json({
             message: 'Conversation was added successfully!',
         });
@@ -158,6 +159,7 @@ async function sendMessage(req, res, next) {
             });
 
             let result = await newMessage.save();
+            console.log(result);
 
             // emit socket event
             global.io.emit('new_message', {

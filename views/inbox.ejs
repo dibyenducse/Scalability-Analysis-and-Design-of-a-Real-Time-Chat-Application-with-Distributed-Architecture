@@ -202,12 +202,12 @@
         });
 
         // prepare the form data
-        const formData = new FormData(form);
-        formData.append('receiverId', participant.id);
-        formData.append('receiverName', participant.name);
-        formData.append('avatar', participant.avatar || '');
-        formData.append('conversationId', current_conversation_id);
-
+        let formData = new FormData(form);
+        // formData.append('receiverId', participant.id);
+        // formData.append('receiverName', participant.name);
+        // formData.append('avatar', participant.avatar || '');
+        // formData.append('conversationId', current_conversation_id);
+        console.log(formData)
         // send the request to server
         let response = await fetch("/inbox/message", {
           method: "POST",
