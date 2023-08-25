@@ -48,4 +48,21 @@ const redirectLoggedIn = function (req, res, next) {
     }
 };
 
-module.exports = { checkLogin, redirectLoggedIn };
+//gurad to protect routes that need role based authorization
+function requireRole(role) {
+    return function (req, res, next) {
+        if (req.user.role && role.includes(req.user.role)) {
+            next();
+        } else {
+            res.status(401).json({
+                errors: {
+                    common: {
+                        msg: 'You are not authorized!',
+                    },
+                },
+            });
+        }
+    };
+}
+
+module.exports = { checkLogin, redirectLoggedIn, requireRole };

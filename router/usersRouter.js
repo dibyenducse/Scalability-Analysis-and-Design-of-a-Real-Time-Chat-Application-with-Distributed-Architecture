@@ -1,7 +1,7 @@
 //external import
 const express = require('express');
 //internal import
-const { checkLogin } = require('../middlewares/common/checkLogin');
+const { checkLogin, requireRole } = require('../middlewares/common/checkLogin');
 const {
     getUsers,
     addUser,
@@ -19,12 +19,18 @@ const {
 const router = express.Router();
 
 //Users page
-router.get('/', decorateHtmlResponse('Users'), checkLogin, getUsers);
+router.get(
+    '/',
+    decorateHtmlResponse('Users'),
+    checkLogin,
+    requireRole(['admin']),
+    getUsers
+);
 //add user
-router.post('/', checkLogin, fieldUpload, addUser);
+router.post('/', checkLogin, requireRole(['admin']), fieldUpload, addUser);
 
 //remove user
-router.delete('/:id', removeUser);
+router.delete('/:id', checkLogin, requireRole(['admin']), removeUser);
 
 module.exports = router;
 
