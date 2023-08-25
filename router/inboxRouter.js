@@ -32,7 +32,7 @@ router.post('/conversation', checkLogin, addConversation);
 // //get messages of a conversation
 router.get('/messages/:conversation_id', checkLogin, getMessages);
 
-// //send message
+// //send message router
 router.post('/message', checkLogin, attachmentUpload.any(), sendMessage);
 
 module.exports = router;
