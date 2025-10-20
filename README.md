@@ -1,6 +1,6 @@
-# 🗨️ Scalability Analysis and Design of a Real-Time Chat Application with Distributed Architecture
+# Scalability Analysis and Design of a Real-Time Chat Application with Distributed Architecture
 
-## 📘 Overview
+## Overview
 This project was developed as part of my **B.Sc. Engineering Thesis** in **Computer Science and Engineering** at the **University of Rajshahi, Bangladesh**.  
 It focuses on designing and evaluating a **real-time chat system** built on **distributed architecture** to achieve **low-latency communication**, **fault tolerance**, and **horizontal scalability**.  
 
@@ -8,7 +8,7 @@ The system demonstrates how **Node.js**, **Socket.IO**, and **EJS (Embedded Java
 
 ---
 
-## 🎯 Research Objectives
+##  Research Objectives
 1. To design a real-time chat application that ensures low-latency communication even under heavy user loads.  
 2. To analyze the scalability behavior of the system under different deployment configurations.  
 3. To evaluate the performance improvements achieved through distributed architecture.  
@@ -16,7 +16,7 @@ The system demonstrates how **Node.js**, **Socket.IO**, and **EJS (Embedded Java
 
 ---
 
-## ⚙️ System Architecture
+## System Architecture
 The architecture follows a **distributed, event-driven** model designed for scalability and performance:
 
 - **Backend:** Node.js (Express.js + Socket.IO)  
